@@ -1,9 +1,9 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("users", table => {
     table.increments("id");
-    table.integer("role_id").unsigned();
-    table.string("email").unique();
-    table.string("password");
+    table.integer("role_id").unsigned().notNullable();
+    table.string("email").unique().notNullable();
+    table.string("password").notNullable();
     table.timestamp("created_at").defaultTo(knex.fn.now());
   });
 };
