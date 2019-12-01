@@ -55,7 +55,7 @@ module.exports = fp(async function(fastify, opts) {
       .query()
       .where("email", email)
       .first()
-      .eager("role");
+      .eager("[role, profile]");
     if (!u) {
       throw Boom.unauthorized("Mohon cek email dan password anda");
     }
@@ -63,10 +63,16 @@ module.exports = fp(async function(fastify, opts) {
       throw Boom.unauthorized("Mohon cek email dan password anda");
     }
 
+    const payload = {
+      email: u.email,
+      full_name: u.profile.full_name,
+      role: u.role.name
+    };
+
     const res = {
       userId: u.id,
-      token: 'asdsadasd'
-    };
+      token: 'Bearer ' + fastify.jwt.sign({ payload })
+    }
 
     return res;
   });
