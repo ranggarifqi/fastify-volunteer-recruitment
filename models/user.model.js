@@ -20,6 +20,29 @@ class User extends Model {
       }
     };
   }
+
+  static get relationMappings() {
+    const Role = require('./role.model');
+    const UserProfile = require('./userProfile.model');
+    return {
+      role: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Role,
+        join: {
+          from: 'users.role_id',
+          to: 'roles.id'
+        }
+      },
+      profile: {
+        relation: Model.HasOneRelation,
+        modelClass: UserProfile,
+        join: {
+          from: 'users.id',
+          to: 'user_profiles.user_id'
+        }
+      }
+    };
+  }
 }
 
 module.exports = User;

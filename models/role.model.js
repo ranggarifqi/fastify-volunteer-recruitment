@@ -19,6 +19,20 @@ class Role extends Model {
       }
     };
   }
+
+  static get relationMappings() {
+    const User = require("./user.model");
+    return {
+      users: {
+        relation: Model.HasManyRelation,
+        modelClass: User,
+        join: {
+          from: "roles.id",
+          to: "users.role_id"
+        }
+      }
+    };
+  }
 }
 
 module.exports = Role;
