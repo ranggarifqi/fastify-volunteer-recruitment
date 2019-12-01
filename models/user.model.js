@@ -8,18 +8,17 @@ class User extends Model {
   }
 
   static get jsonSchema() {
-    return Base.generateJsonSchema({
+    return {
       type: "object",
-      required: ["username", "password"],
+      required: ["role_id", "email", "password"],
       properties: {
         id: { type: "integer" },
-        username: { type: "string", minLength: 1, maxLength: 255 },
+        role_id: { type: "integer" },
+        email: { type: "string", minLength: 1, maxLength: 255 },
         password: { type: "string", minLength: 1, maxLength: 255 },
-        salt: { type: "string", minLength: 1, maxLength: 255 },
-        created_at: { type: "string" },
-        updated_at: { type: "string" }
+        created_at: { type: "string" }
       }
-    });
+    };
   }
 }
 
