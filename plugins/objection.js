@@ -1,7 +1,7 @@
 "use strict";
 
 const fp = require("fastify-plugin");
-const { User } = require('../models');
+const models = require("../models");
 
 module.exports = fp(async function(fastify, opts) {
   fastify.register(require("fastify-objectionjs"), {
@@ -14,6 +14,6 @@ module.exports = fp(async function(fastify, opts) {
         database: process.env.DB_NAME
       }
     },
-    models: [User]
+    models
   });
 });
