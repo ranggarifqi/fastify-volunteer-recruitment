@@ -11,7 +11,7 @@ module.exports = fp(async function(fastify, opts) {
     try {
       await req.jwtVerify();
     } catch (error) {
-      reply.send(err);
+      reply.send(error);
     }
   });
 });

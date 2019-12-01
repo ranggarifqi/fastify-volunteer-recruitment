@@ -10,7 +10,7 @@ const salt = bcrypt.genSaltSync(10);
 module.exports = fp(async function(fastify, opts) {
   fastify.decorate("user-find", async function() {
     const { user } = fastify.objection.models;
-    const u = await user.query().orderBy("created_at", "desc");
+    const u = await user.query().select('email').orderBy("created_at", "desc").eager('[role, profile]');
     return u;
   });
 
