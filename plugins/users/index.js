@@ -3,6 +3,7 @@
 const fp = require("fastify-plugin");
 const bcrypt = require("bcryptjs");
 const { transaction } = require("objection");
+const Boom = require("boom");
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -46,5 +47,27 @@ module.exports = fp(async function(fastify, opts) {
     } catch (error) {
       throw error;
     }
+  });
+
+  fastify.decorate("user-login", async ({ email, password }) => {
+    const { user } = fastify.objection.models;
+    const u = await user
+      .query()
+      .where("email", email)
+      .first()
+      .eager("role");
+    if (!u) {
+      throw Boom.unauthorized("Mohon cek email dan password anda");
+    }
+    if (!bcrypt.compareSync(password, u.password)) {
+      throw Boom.unauthorized("Mohon cek email dan password anda");
+    }
+
+    const res = {
+      userId: u.id,
+      token: 'asdsadasd'
+    };
+
+    return res;
   });
 });
