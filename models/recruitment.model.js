@@ -32,7 +32,19 @@ class Recruitment extends Model {
     };
   }
 
-  // static get relationMappings() {}
+  static get relationMappings() {
+    const Volunteer = require('./volunteer.model');
+    return {
+      volunteers: {
+        relation: Model.HasManyRelation,
+        modelClass: Volunteer,
+        join: {
+          from: 'recruitments.id',
+          to: 'volunteers.recruitment_id'
+        }
+      }
+    }
+  }
 }
 
 module.exports = Recruitment;
