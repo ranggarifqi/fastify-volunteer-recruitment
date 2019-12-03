@@ -10,7 +10,14 @@ class Recruitment extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["title", "sub_title", "description", "submit_description", "start_date", "end_date"],
+      required: [
+        "title",
+        "sub_title",
+        "description",
+        "submit_description",
+        "start_date",
+        "end_date"
+      ],
       properties: {
         id: { type: "integer" },
         title: { type: "string" },
@@ -20,7 +27,7 @@ class Recruitment extends Model {
         created_at: { type: "string" },
         start_date: { type: "string" },
         end_date: { type: "string" },
-        is_active: { type: "boolean" },
+        is_active: { type: "boolean" }
       }
     };
   }
