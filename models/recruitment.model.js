@@ -34,6 +34,9 @@ class Recruitment extends Model {
 
   static get relationMappings() {
     const Volunteer = require('./volunteer.model');
+    const Position = require('./position.model');
+    const RecruitmentPosition = require('./recruitmentPosition.model');
+
     return {
       volunteers: {
         relation: Model.HasManyRelation,
@@ -41,6 +44,19 @@ class Recruitment extends Model {
         join: {
           from: 'recruitments.id',
           to: 'volunteers.recruitment_id'
+        }
+      },
+      positions: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Position,
+        join: {
+          from: 'recruitments.id',
+          through: {
+            modelClass: RecruitmentPosition,
+            from: 'recruitments_positions.recruitment_id',
+            to: 'recruitments_positions.position_id'
+          },
+          to: 'positions.id'
         }
       }
     }
